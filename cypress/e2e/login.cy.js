@@ -6,7 +6,7 @@ describe('login POM', () => {
     let validPassword = '12345678'
 
     before ('visit login page', ()=>{
-        cy.visit('https://gallery-app.vivifyideas.com/');
+        cy.visit('/');
         loginPage.loginBtn.click();
     })
 

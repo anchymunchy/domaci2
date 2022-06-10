@@ -5,7 +5,7 @@ describe ('all galleries page', () =>{
     let searchField = 'ana';
 
     beforeEach('visit all galleries page', () =>{
-        cy.visit('https://gallery-app.vivifyideas.com/')
+        cy.visit('/')
         cy.url().should ('include', '/gallery-app')
     })
 

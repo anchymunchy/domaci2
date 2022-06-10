@@ -20,6 +20,7 @@ class LoginPage {
     }
 
     login(email, password) {
+        this.loginBtn.click()
         this.emailInput.type(email)
         this.passwordInput.type(password)
         this.submitBtn.click()

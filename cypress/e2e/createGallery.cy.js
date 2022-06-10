@@ -3,6 +3,8 @@ import {createGallery} from '../page_objects/createGallery';
 
 
 describe('create galery', ()=>{
+    let email = 'bla@gmail.com'
+    let password = '12345678'
     let title = 'test';
     let invalidTitle = 't';
     let invalidTitle2 = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
@@ -10,17 +12,21 @@ describe('create galery', ()=>{
     let description = 'test';
     let image = 'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036__340.jpg'
     let wrongUrl = 'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036__340.txt'
-    beforeEach('login',()=>{
-        cy.visit('https://gallery-app.vivifyideas.com/login')
-        cy.get('#email').type('bla@gmail.com');
-        cy.get('#password').type('12345678');
-        cy.get('.btn-custom').click();
-    })
+
+
+    beforeEach('valid login using POM', () =>{
+        cy.visit('/'),
+        createGallery.loginBtn.click(),
+        createGallery.login(email, password)
+    
+        })
+   
 
     it('create gallery', () =>{
     createGallery.createGallery(title, description, image)
         cy.url().should('not.include', '/create')
     })
+
 
     it('create gallery without title', () =>{
         createGallery.withoutTitle(description, image)
@@ -34,7 +40,7 @@ describe('create galery', ()=>{
     
     it('create gallery with 256 char in title', () =>{
         createGallery.titleWith256Character(invalidTitle2,description, image)
-           cy.url().should('include', '/create')
+          cy.url().should('include', '/create')
     })
     it('create gallery without description', () =>{
         createGallery.galleryWithoutDescription(title,image)
@@ -49,12 +55,12 @@ describe('create galery', ()=>{
     it('create gallery with wrong url format', () =>{
         createGallery.createWithWrongUrl(title,description, wrongUrl);
         cy.url().should('include', '/create');
-      })
+    })
     
-      it('all empty fields', () =>{
+    it('all empty fields', () =>{
         createGallery.allEmptyFields();
         cy.url().should('include', '/create');
-      })
+    })
     
     
     })
